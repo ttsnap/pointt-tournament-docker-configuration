@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  app1:
+    image: mein-webtop-debian:latest
+    container_name: app1
+    restart: unless-stopped
+    shm_size: '2gb'
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+    ports:
+      - "3001:3000"
+    volumes:
+      # Webtop-Konfiguration (Grafische Oberfläche)
+      - app1_config:/config
+      # Persistenter Speicherort für Ihre installierte Debian-App
+      - app1_data:/var/lib/meine-app-daten
+    networks:
+      - mein-netzwerk
+
+  app2:
+    image: mein-webtop-debian:latest
+    container_name: app2
+    restart: unless-stopped
+    shm_size: '2gb'
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+    ports:
+      - "3002:3000"
+    volumes:
+      # Webtop-Konfiguration (Grafische Oberfläche)
+      - app2_config:/config
+      # Persistenter Speicherort für Ihre installierte Debian-App
+      - app2_data:/var/lib/meine-app-daten
+    networks:
+      - mein-netzwerk
+
+volumes:
+  app1_config:
+  app1_data:
+  app2_config:
+  app2_data:
+
+networks:
+  mein-netzwerk:
+    driver: bridge
