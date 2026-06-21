@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   app1:
     image: mein-webtop-debian:latest
@@ -11,7 +9,7 @@ services:
       - PGID=1000
       - TZ=Europe/Berlin
     ports:
-      - "3001:3000"
+      - "3001:3001"
     volumes:
       # Webtop-Konfiguration (Grafische Oberfläche)
       - app1_config:/config
@@ -30,7 +28,7 @@ services:
       - PGID=1000
       - TZ=Europe/Berlin
     ports:
-      - "3002:3000"
+      - "3002:3001"
     volumes:
       # Webtop-Konfiguration (Grafische Oberfläche)
       - app2_config:/config
