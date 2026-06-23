@@ -3,7 +3,7 @@ services:
     image: mein-webtop-debian:latest
     container_name: app1
     restart: unless-stopped
-    shm_size: '2gb'
+    shm_size: '512mb'
     environment:
       - PUID=1000
       - PGID=1000
@@ -22,7 +22,7 @@ services:
     image: mein-webtop-debian:latest
     container_name: app2
     restart: unless-stopped
-    shm_size: '2gb'
+    shm_size: '512mb'
     environment:
       - PUID=1000
       - PGID=1000

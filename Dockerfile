@@ -1,9 +1,19 @@
+# ── Stage 1: Downloader ──────────────────────────────────────────────
+FROM debian:bookworm-slim AS downloader
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends wget ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /tmp/apps && \
+    wget -q -O /tmp/apps/pointt-tournament.deb https://pointt.de/assets/pointt-tournament.deb
+
+
+# ── Stage 2: Finales Image ───────────────────────────────────────────
 FROM linuxserver/webtop:debian-xfce
 
-# Kopiere die lokalen .deb-Dateien in den Container
-COPY apps/ /tmp/apps/
+COPY --from=downloader /tmp/apps/pointt-tournament.deb /tmp/apps/
 
-# Pakete installieren und Abhängigkeiten automatisch auflösen
 RUN apt-get update && \
-    apt-get install -y /tmp/apps/*.deb && \
+    apt-get install -y --no-install-recommends /tmp/apps/pointt-tournament.deb && \
     rm -rf /tmp/apps /var/lib/apt/lists/*
